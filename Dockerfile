@@ -35,7 +35,6 @@ RUN apk update && apk add --no-cache libstdc++ && rm -rf /var/cache/apk/*
 
 ARG APP_NAME
 ENV APP_NAME $APP_NAME
-RUN echo $APP_NAME
 
 COPY --from=build /opt/app/${APP_NAME} /bin
 
