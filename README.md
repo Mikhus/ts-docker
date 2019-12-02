@@ -16,8 +16,8 @@ pre-built binary of microservice, packed with pkg tool.
 `package.json` provides a basic command set to automate local and docker builds
 of microservice.
 
-With current docker build implementation it results into `68.8 MB` image
-size production, which includes `59 MB` pre-built ts/node microservice binary
+With current docker build implementation it results into `58.6 MB` image
+size production, which includes `49.2 MB` pre-built ts/node microservice binary
 inside.
 
 **Is it possible to have less?**
