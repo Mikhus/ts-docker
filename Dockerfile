@@ -16,10 +16,7 @@
 ############### 1. BUILD STAGE ###############
 FROM node:lts-alpine AS build
 
-ENV PATH /opt/app/node_modules/.bin:$PATH
-
 RUN mkdir -p /opt/app
-
 WORKDIR /opt/app
 
 COPY package*.json ./
