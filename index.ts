@@ -19,19 +19,16 @@ import * as commander from 'commander';
 import * as express from 'express';
 import * as pkg from './package.json';
 
-const program = new commander.Command();
 const app = express();
-const port = 9999;
 
-program
+new commander.Command()
     .version(`v${pkg.version}`, '-v, --version', 'Prints version and exit')
-    .action(() => program.v && process.exit(0))
     .parse(process.argv);
 
 app.get('/', (req: express.Request, res: express.Response) => {
     res.send(`Hello, ${req.header('user-agent')}`);
 });
 
-app.listen( port, () => {
-    console.log(`Starting server at http://localhost:${port}`);
+app.listen(pkg.config.gport, () => {
+    console.log(`Starting server at http://localhost:${pkg.config.gport}`);
 });
