@@ -1,6 +1,6 @@
 {
   "name": "ts-docker",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Minimalist TypeScript/Node Docker Example",
   "main": "index.js",
   "bin": "index.js",
