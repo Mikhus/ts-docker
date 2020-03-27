@@ -19,7 +19,8 @@ of microservice.
 
 With current docker build implementation it results into `27.1 MB` image
 size production, which includes `18.4 MB` pre-built compressed ts/node 
-microservice binary inside.
+microservice binary inside, which results into `21.6 MB` compressed docker image
+size for pulling.
 
 **Is it possible to have less?**
 
