@@ -16,13 +16,11 @@
 ############### 1. BUILD STAGE ###############
 FROM node:lts-alpine AS build
 
-RUN apk update && apk add gzip
-
 RUN mkdir -p /opt/app
 WORKDIR /opt/app
 
 COPY package*.json ./
-RUN npm set progress=false ; npm i --unsafe-perm
+RUN npm set progress=false ; npm i --unsafe-perm --only=prod
 
 COPY . .
 RUN npm run build
@@ -54,9 +52,9 @@ RUN addgroup --gid "$GID" "$USER" \
     --ingroup "$USER" \
     --no-create-home \
     --uid "$UID" \
-    "$USER"
-
-RUN apk update && apk add --no-cache libstdc++ && rm -rf /var/cache/apk/*
+    "$USER" && \
+    apk update && apk add --no-cache libstdc++ && \
+    rm -rf /var/cache/apk/*
 
 USER docker
 
