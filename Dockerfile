@@ -16,6 +16,8 @@
 ############### 1. BUILD STAGE ###############
 FROM node:lts-alpine AS build
 
+RUN apk update && apk add gzip
+
 RUN mkdir -p /opt/app
 WORKDIR /opt/app
 
@@ -25,7 +27,17 @@ RUN npm set progress=false ; npm i --unsafe-perm
 COPY . .
 RUN npm run build
 
-############### 2. RELEASE STAGE ###############
+############### 2. COMPRESS STAGE ##############
+FROM mikhus/alpine-gzexe:latest AS compress
+
+ARG APP_NAME
+ENV APP_NAME $APP_NAME
+
+COPY --from=build /opt/app/${APP_NAME} /opt
+
+RUN gzexe /opt/${APP_NAME}
+
+############### 3. RELEASE STAGE ###############
 FROM alpine:latest AS release
 
 ARG APP_NAME
@@ -48,6 +60,8 @@ RUN apk update && apk add --no-cache libstdc++ && rm -rf /var/cache/apk/*
 
 USER docker
 
-COPY --from=build /opt/app/${APP_NAME} /bin
+COPY --from=compress /opt/${APP_NAME} /bin
+COPY --from=compress /bin/gzip /bin
+COPY --from=compress /bin/gzexe /bin
 
 CMD $APP_NAME

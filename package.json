@@ -6,7 +6,9 @@
   "bin": "index.js",
   "scripts": {
     "build": "tsc && pkg -t node12-alpine-x64 .",
-    "build:linux": "tsc && pkg -t node12-linux-x64 .",
+    "build:linux": "tsc && pkg -t node12-linux-x64 . && gzexe $npm_package_name && rm $npm_package_name~",
+    "build:macos": "pkg -t node12-macos-x64 . && gzexe $npm_package_name && rm $npm_package_name~",
+    "build:win": "pkg -t node12-win-x64 .",
     "clean:dts": "find . -name '*.d.ts' -not -wholename '*node_modules*' -type f -delete",
     "clean:map": "find . -name '*.js.map' -not -wholename '*node_modules*' -type f -delete",
     "clean:js": "find . -name '*.js' -not -wholename '*node_modules*' -type f -delete",
@@ -18,7 +20,8 @@
     "test": "echo \"under construction...\" && exit 0",
     "docker:clean": "docker rmi `docker images -q -f dangling=true`",
     "docker:build": "npm run clean ; docker build --build-arg APP_NAME=\"$npm_package_name\" -f Dockerfile -t $npm_package_name . && echo \"Build success! Docker image produced:\" && docker images | grep $npm_package_name",
-    "docker:run": "docker run -dp $npm_package_config_gport:$npm_package_config_hport --rm -it --name $npm_package_name $npm_package_name",
+    "docker:start": "docker run -dp $npm_package_config_gport:$npm_package_config_hport --rm -it --name $npm_package_name $npm_package_name",
+    "docker:start:sh": "docker run --net=\"host\" --rm -it --entrypoint /bin/sh --name $npm_package_name $npm_package_name",
     "docker:stop": "docker stop `docker ps -q --filter ancestor=$npm_package_name` 2>/dev/null ||:",
     "docker:ssh": "docker exec -ti $npm_package_name /bin/sh"
   },
