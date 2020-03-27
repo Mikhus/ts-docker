@@ -20,7 +20,7 @@ RUN mkdir -p /opt/app
 WORKDIR /opt/app
 
 COPY package*.json ./
-RUN npm set progress=false ; npm i --unsafe-perm --only=prod
+RUN npm set progress=false ; npm i -g pkg && npm i --unsafe-perm --only=prod
 
 COPY . .
 RUN npm run build

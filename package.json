@@ -7,8 +7,8 @@
   "scripts": {
     "build": "tsc && pkg -t node12-alpine-x64 .",
     "build:linux": "tsc && pkg -t node12-linux-x64 . && gzexe $npm_package_name && rm $npm_package_name~",
-    "build:macos": "pkg -t node12-macos-x64 . && gzexe $npm_package_name && rm $npm_package_name~",
-    "build:win": "pkg -t node12-win-x64 .",
+    "build:macos": "tsc && pkg -t node12-macos-x64 . && gzexe $npm_package_name && rm $npm_package_name~",
+    "build:win": "tsc && pkg -t node12-win-x64 .",
     "clean:dts": "find . -name '*.d.ts' -not -wholename '*node_modules*' -type f -delete",
     "clean:map": "find . -name '*.js.map' -not -wholename '*node_modules*' -type f -delete",
     "clean:js": "find . -name '*.js' -not -wholename '*node_modules*' -type f -delete",
